@@ -1,0 +1,15 @@
+<form hx-post="{{ request.path }}" hx-on="htmx:afterRequest: this.remove()" class="d-flex gap-2 mb-3">
+    {% for field in form %}
+        <div class="form-group flex-grow-1">
+            {{ field }}
+        </div>
+        {% if field.errors %}
+            <div class="text-danger">
+                {{ field.errors|striptags }}
+            </div>
+            
+        {% endif %}
+    {% endfor %}
+    <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Save</button>
+    <button type="button" class="btn btn-secondary" hx-on:click="this.closest('form').remove()"><i class="fas fa-times"></i> Cancel</button>
+</form>

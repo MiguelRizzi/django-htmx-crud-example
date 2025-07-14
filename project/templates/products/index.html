@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        <div class="row py-5 px-lg-3 px-xl-5">
+            <h1 class="text-center fw-bold display-5 mb-3">CRUD with HTMX</h1>
+
+            <div class="col-12 mb-3">
+                <div class="d-flex justify-content-between border-bottom gap-3">
+                    <!-- Search form with HTMX -->
+                    <form class="form-group" hx-get="{% url 'product_list' %}" hx-target="#product_tbody" hx-trigger="submit, input delay:500ms">
+                        <input type="text" id="query" name="query" placeholder="Search products..." class="form-control me-2" style="min-width:350px;">
+                    </form>
+                    <button type="button" hx-get="{% url 'product_create' %}" hx-trigger="click" hx-target="#product_form_container" hx-swap="innerHTML" class="btn btn-primary mb-3"><i class="fas fa-plus"></i> Add Product</button>
+                </div>
+            </div>
+
+            <div id="product_form_container" class="col-12 mb-3">
+                <!-- Product form will be loaded here with HTMX -->
+            </div>
+            
+            <div class="col-12">
+                <table hx-get="{% url 'product_list' %}" hx-trigger="load, refreshProducts from:body" hx-target="#product_tbody" class="table table-hover botder-top">
+                    <thead class="table-dark" >
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Price</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="product_tbody" >
+                        <!-- Product list will be loaded here with HTMX -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
